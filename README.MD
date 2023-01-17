@@ -35,7 +35,7 @@
 
 ```
 {
-    "canister":{
+    "canisters":{
         "first_canister"{
             "main": "path1.mo",
             "type": "motoko"
@@ -69,4 +69,4 @@ actor{
 ## Deploy
 
 - from dfx.json
-- `dfx canister --network ic create {first_canister} -with-cycles 1000000000000`
+- `dfx canister --network ic create {first_canister} --with-cycles 1000000000000`
