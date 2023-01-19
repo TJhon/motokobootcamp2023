@@ -5,6 +5,7 @@ import Text "mo:base/Text";
 import Iter "mo:base/Iter";
 import Array "mo:base/Array";
 import Debug "mo:base/Debug";
+import Buffer "mo:base/Buffer";
 actor{
     type Pattern = Text.Pattern;
     public func average_array(array: [Int]): async Int{
@@ -49,18 +50,30 @@ actor{
     };
     public func find_duplicates(a : [Nat]) : async [Nat] {
 
-        var ret : [Nat] = [];
-
-        for(i in Iter.range(0, a.size()-1)) {
-
-            for(j in Iter.range(i+1, a.size()-1)){
-
-            if(a[i] == a[j]){
-                ret := Array.append<Nat>(ret, [a[j]]);
+        var dup = Buffer.Buffer<Nat>(0);
+        var ori = Buffer.Buffer<Nat>(0);
+        for(val1 in a.vals()){
+            for(val2 in ori.vals()){
+                if(val2 == val1){
+                    dup.add(val2)
+                }
             };
-
-            };
+            ori.add(val1);
         };
-        return ret
+        return Buffer.toArray(dup);
     }; 
+    public func convert_to_binary(n : Nat) : async Text {
+        var number: Nat = n;
+        var remainder: Text = "";
+        var result: Text = "";
+
+        while (number > 0){
+            remainder := Nat.toText(number % 2);
+            result := Text.concat(remainder, result);
+            number := number / 2;
+        };
+
+        return result;
+    };
+
 }
